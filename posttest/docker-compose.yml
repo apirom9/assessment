@@ -1,0 +1,33 @@
+version: '3'
+
+networks:
+  local_network:
+
+services:
+  application:
+    image: amazoncorretto:17.0.9-alpine3.18
+    depends_on: [postgres]
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/lottery_db
+      DATABASE_USER: user
+      DATABASE_PASS: password
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "8888:8888"
+    networks:
+      - local_network
+    command: ["./gradlew", "bootRun"]
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: lottery_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - local_network
