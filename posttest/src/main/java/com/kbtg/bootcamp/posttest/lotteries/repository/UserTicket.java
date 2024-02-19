@@ -1,4 +1,4 @@
-package com.kbtg.bootcamp.posttest.lotteries;
+package com.kbtg.bootcamp.posttest.lotteries.repository;
 
 import jakarta.persistence.*;
 
