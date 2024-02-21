@@ -1,5 +1,6 @@
 package com.kbtg.bootcamp.posttest.lotteries.service;
 
+import com.kbtg.bootcamp.posttest.exception.InvalidRequestException;
 import com.kbtg.bootcamp.posttest.lotteries.dto.CreateLotteryDto;
 import com.kbtg.bootcamp.posttest.lotteries.repository.Lottery;
 import com.kbtg.bootcamp.posttest.lotteries.repository.LotteryRepository;
@@ -34,7 +35,7 @@ public class LotteryService {
     private void validate(CreateLotteryDto createLotteryDto) {
         for (char c : createLotteryDto.ticket().toCharArray()) {
             if (!Character.isDigit(c)) {
-                throw new RuntimeException("Ticket id must be numeric only"); // TODO add exception handler
+                throw new InvalidRequestException("Ticket id must be numeric only");
             }
         }
     }
