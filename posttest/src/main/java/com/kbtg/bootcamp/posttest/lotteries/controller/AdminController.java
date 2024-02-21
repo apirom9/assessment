@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-
-// TODO basic authentication (username = admin, password = password)
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
