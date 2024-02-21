@@ -3,6 +3,8 @@ package com.kbtg.bootcamp.posttest.lotteries.controller;
 import com.kbtg.bootcamp.posttest.lotteries.dto.CreateLotteryDto;
 import com.kbtg.bootcamp.posttest.lotteries.service.LotteryService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +23,8 @@ public class AdminController {
     }
 
     @PostMapping("/lotteries")
-    public Map<String, String> addLottery(@Valid @RequestBody CreateLotteryDto createLotteryDto) {
+    public ResponseEntity<Map<String, String>> addLottery(@Valid @RequestBody CreateLotteryDto createLotteryDto) {
         String ticketId = lotteryService.addLottery(createLotteryDto);
-        return Map.of("ticket", ticketId);
+        return new ResponseEntity<>(Map.of("ticket", ticketId), HttpStatus.CREATED);
     }
 }
