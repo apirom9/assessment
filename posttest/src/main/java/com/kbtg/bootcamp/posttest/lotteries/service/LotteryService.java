@@ -7,6 +7,9 @@ import com.kbtg.bootcamp.posttest.lotteries.repository.LotteryRepository;
 import com.kbtg.bootcamp.posttest.lotteries.repository.UserTicketRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class LotteryService {
 
@@ -30,6 +33,14 @@ public class LotteryService {
         this.lotteryRepository.save(lottery);
 
         return lottery.getTicketId();
+    }
+
+    public List<String> getAllLotteryIds(){
+        List<String> result = new ArrayList<>();
+        for(Lottery lottery : this.lotteryRepository.findAll()){
+            result.add(lottery.getTicketId());
+        }
+        return result;
     }
 
     private void validate(CreateLotteryDto createLotteryDto) {
