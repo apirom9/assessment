@@ -23,8 +23,8 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((requests) -> {
-//            requests.requestMatchers("/test").permitAll();
             requests.requestMatchers("/admin").hasRole("ADMIN");
+            requests.requestMatchers("/*").permitAll();
             requests.anyRequest().authenticated();
         });
         http.addFilterBefore(new AnonymousAuthFilter(), BasicAuthenticationFilter.class);
