@@ -7,6 +7,7 @@ import com.kbtg.bootcamp.posttest.lotteries.repository.Lottery;
 import com.kbtg.bootcamp.posttest.lotteries.repository.LotteryRepository;
 import com.kbtg.bootcamp.posttest.lotteries.repository.UserTicket;
 import com.kbtg.bootcamp.posttest.lotteries.repository.UserTicketRepository;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -85,5 +86,14 @@ public class LotteryService {
                 throw new InvalidRequestException("User id must be numeric only");
             }
         }
+    }
+
+    public List<UserTicket> getLotteries(String userId) {
+
+        UserTicket exampleUserTicket = new UserTicket();
+        exampleUserTicket.setUserId(userId);
+        Example<UserTicket> example = Example.of(exampleUserTicket);
+
+        return this.userTicketRepository.findAll(example);
     }
 }
