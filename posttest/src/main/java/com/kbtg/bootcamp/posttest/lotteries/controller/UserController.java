@@ -40,7 +40,7 @@ public class UserController {
             totalCount += ticket.getAmount();
         }
         return new ResponseEntity<>(Map.of("tickets", ticketIds,
-                                            "count", totalCost,
-                                           "cost", totalCount), HttpStatus.OK);
+                                            "count", totalCount,
+                                           "cost", totalCost), HttpStatus.OK);
     }
 }
