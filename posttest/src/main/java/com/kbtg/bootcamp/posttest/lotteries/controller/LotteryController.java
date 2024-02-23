@@ -21,7 +21,7 @@ public class LotteryController {
     }
 
     @GetMapping("")
-    public ResponseEntity<Map<String, List<String>>> getLotteryIds(@Valid @RequestBody CreateLotteryDto createLotteryDto) {
+    public ResponseEntity<Map<String, List<String>>> getLotteryIds() {
         List<String> ticketIds = lotteryService.getAllLotteryIds();
         return new ResponseEntity<>(Map.of("tickets", ticketIds), HttpStatus.OK);
     }
