@@ -14,7 +14,6 @@ public class UserTicket {
     private String userId;
 
     @OneToOne
-    @JoinColumn(unique = true)
     private Lottery ticket;
 
     public Integer getId() {
