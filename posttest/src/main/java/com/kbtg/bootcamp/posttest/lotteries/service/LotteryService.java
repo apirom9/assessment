@@ -96,4 +96,24 @@ public class LotteryService {
 
         return this.userTicketRepository.findAll(example);
     }
+
+    public String deleteBuyLottery(String userId, String ticketId) {
+
+        Optional<Lottery> ticket = this.lotteryRepository.findById(ticketId);
+        if(ticket.isEmpty()){
+            throw new NotFoundException("Cannot find ticket id: " + ticketId);
+        }
+
+        UserTicket exampleUserTicket = new UserTicket();
+        exampleUserTicket.setUserId(userId);
+        exampleUserTicket.setTicket(ticket.get());
+        Example<UserTicket> example = Example.of(exampleUserTicket);
+
+        StringBuilder result = new StringBuilder();
+        for(UserTicket userTicket :  this.userTicketRepository.findAll(example)){
+            result.append(userTicket.getId()).append(" ");
+            userTicketRepository.delete(userTicket);
+        }
+        return result.toString().trim();
+    }
 }

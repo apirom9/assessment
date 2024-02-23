@@ -18,8 +18,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,7 +40,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("Test buy lottery successfully")
     void testBuyLotterySuccess() throws Exception {
-        String userId = "user1";
+        String userId = "1234567890";
         String ticketId = "123456";
         String url = "/users/" + userId + "/lotteries/" + ticketId;
         when(lotteryService.buyLottery(userId, ticketId)).thenReturn("1");
@@ -65,5 +64,17 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.count", is(3)))
                 .andExpect(jsonPath("$.cost", is(500)))
                 .andExpect(jsonPath("$.tickets", is(List.of("123456","123457"))));
+    }
+
+    @Test
+    @DisplayName("Test delete buy lottery successfully")
+    void testDeleteBuyLotterySuccess() throws Exception {
+        String userId = "1234567890";
+        String ticketId = "123456";
+        String url = "/users/" + userId + "/lotteries/" + ticketId;
+        when(lotteryService.deleteBuyLottery(userId, ticketId)).thenReturn("2");
+        mockMvc.perform(delete(url))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.ticket", is("2")));
     }
 }
