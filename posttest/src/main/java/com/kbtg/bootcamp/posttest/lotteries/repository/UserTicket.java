@@ -1,9 +1,13 @@
 package com.kbtg.bootcamp.posttest.lotteries.repository;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "user_ticket")
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserTicket {
 
     @Id
