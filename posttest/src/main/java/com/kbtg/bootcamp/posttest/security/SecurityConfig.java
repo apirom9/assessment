@@ -24,7 +24,8 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((requests) -> {
             requests.requestMatchers("/admin").hasRole("ADMIN");
-            requests.requestMatchers("/*").permitAll();
+            requests.requestMatchers("/lotteries").permitAll();
+            requests.requestMatchers("/users/*/lotteries/*").permitAll();
             requests.anyRequest().authenticated();
         });
         http.addFilterBefore(new AnonymousAuthFilter(), BasicAuthenticationFilter.class);

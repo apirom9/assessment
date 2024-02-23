@@ -1,14 +1,17 @@
 package com.kbtg.bootcamp.posttest.lotteries.service;
 
 import com.kbtg.bootcamp.posttest.exception.InvalidRequestException;
+import com.kbtg.bootcamp.posttest.exception.NotFoundException;
 import com.kbtg.bootcamp.posttest.lotteries.dto.CreateLotteryDto;
 import com.kbtg.bootcamp.posttest.lotteries.repository.Lottery;
 import com.kbtg.bootcamp.posttest.lotteries.repository.LotteryRepository;
+import com.kbtg.bootcamp.posttest.lotteries.repository.UserTicket;
 import com.kbtg.bootcamp.posttest.lotteries.repository.UserTicketRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LotteryService {
@@ -49,5 +52,27 @@ public class LotteryService {
                 throw new InvalidRequestException("Ticket id must be numeric only");
             }
         }
+    }
+
+    public String buyLottery(String userId, String ticketId) {
+
+        Optional<Lottery> ticket = this.lotteryRepository.findById(ticketId);
+        if(ticket.isEmpty()){
+            throw new NotFoundException("Cannot find ticket id: " + ticketId);
+        }
+
+        if(userId.isEmpty() || userId.isBlank()){
+            throw new InvalidRequestException("User id is empty!");
+        }
+
+        UserTicket userTicket = new UserTicket();
+        userTicket.setUserId(userId);
+        userTicket.setTicket(ticket.get());
+        try{
+            this.userTicketRepository.save(userTicket);
+        } catch (Exception e){
+            throw new InvalidRequestException("Ticket with id '" + ticketId + "' is already sold!");
+        }
+        return userTicket.getId().toString();
     }
 }
