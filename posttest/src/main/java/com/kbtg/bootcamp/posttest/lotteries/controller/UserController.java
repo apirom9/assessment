@@ -43,4 +43,10 @@ public class UserController {
                                             "count", totalCount,
                                            "cost", totalCost), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{userId}/lotteries/{ticketId}")
+    public ResponseEntity<Map<String, String>> deleteBuyLottery(@PathVariable String userId, @PathVariable String ticketId) {
+        String ticket = lotteryService.deleteBuyLottery(userId, ticketId);
+        return new ResponseEntity<>(Map.of("ticket", ticket), HttpStatus.OK);
+    }
 }
