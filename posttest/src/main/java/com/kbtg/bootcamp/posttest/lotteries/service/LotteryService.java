@@ -60,10 +60,7 @@ public class LotteryService {
         if(ticket.isEmpty()){
             throw new NotFoundException("Cannot find ticket id: " + ticketId);
         }
-
-        if(userId.isEmpty() || userId.isBlank()){
-            throw new InvalidRequestException("User id is empty!");
-        }
+        validateUserId(userId);
 
         UserTicket userTicket = new UserTicket();
         userTicket.setUserId(userId);
@@ -74,5 +71,19 @@ public class LotteryService {
             throw new InvalidRequestException("Ticket with id '" + ticketId + "' is already sold!");
         }
         return userTicket.getId().toString();
+    }
+
+    private void validateUserId(String userId){
+        if(userId.isEmpty() || userId.isBlank()){
+            throw new InvalidRequestException("User id must not be empty!");
+        }
+        if(userId.length() > 10){
+            throw new InvalidRequestException("User id is too long!");
+        }
+        for (char c : userId.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                throw new InvalidRequestException("User id must be numeric only");
+            }
+        }
     }
 }
