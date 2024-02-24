@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "user_ticket")
+@Table(name = "user_ticket", indexes = @Index(columnList = "user_id, ticket_ticket_id"))
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserTicket {
