@@ -5,20 +5,17 @@ networks:
 
 services:
   application:
-    image: amazoncorretto:17.0.9-alpine3.18
+    image: posttest:1.0
     depends_on: [postgres]
     environment:
       DATABASE_URL: jdbc:postgresql://postgres:5432/lottery_db
       DATABASE_USER: user
       DATABASE_PASS: password
-    volumes:
-      - .:/app
-    working_dir: /app
     ports:
       - "8888:8888"
     networks:
       - local_network
-    command: ["./gradlew", "bootRun"]
+
   postgres:
     image: postgres:latest
     environment:
