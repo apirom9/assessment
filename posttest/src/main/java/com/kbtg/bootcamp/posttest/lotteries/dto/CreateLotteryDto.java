@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 public record CreateLotteryDto(
         @NotNull(message = "ticket is missing")
         @NotBlank(message = "ticket must not be blank")
-        @Size(min = 1, max = 6, message = "ticket length should 1-6 characters")
+        @Size(min = 6, max = 6, message = "ticket length must 6 digits")
         String ticket,
 
         @NotNull(message = "price is missing")
