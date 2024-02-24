@@ -2,12 +2,16 @@ package com.kbtg.bootcamp.posttest.lotteries.repository;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "user_ticket", indexes = @Index(columnList = "user_id, ticket_ticket_id"))
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class UserTicket {
 
     @Id
@@ -19,28 +23,4 @@ public class UserTicket {
 
     @OneToOne
     private Lottery ticket;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public Lottery getTicket() {
-        return ticket;
-    }
-
-    public void setTicket(Lottery ticket) {
-        this.ticket = ticket;
-    }
 }
