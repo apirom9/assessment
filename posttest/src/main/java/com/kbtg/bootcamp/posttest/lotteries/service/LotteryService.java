@@ -111,7 +111,7 @@ public class LotteryService {
 
         StringBuilder result = new StringBuilder();
         for(UserTicket userTicket :  this.userTicketRepository.findAll(example)){
-            result.append(userTicket.getId()).append(" ");
+            result.append(userTicket.getTicket().getTicketId()).append(" ");
             userTicketRepository.delete(userTicket);
         }
         return result.toString().trim();
