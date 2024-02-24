@@ -4,8 +4,10 @@ networks:
   local_network:
 
 services:
-  application:
-    image: posttest:1.0
+  api:
+    image: posttest_api:1.0
+    build:
+      context: .
     depends_on: [postgres]
     environment:
       DATABASE_URL: jdbc:postgresql://postgres:5432/lottery_db
