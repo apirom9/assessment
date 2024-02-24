@@ -79,8 +79,8 @@ public class LotteryService {
         if(userId.isEmpty() || userId.isBlank()){
             throw new InvalidRequestException("User id must not be empty!");
         }
-        if(userId.length() > 10){
-            throw new InvalidRequestException("User id is too long!");
+        if(userId.length() != 10){
+            throw new InvalidRequestException("User id must be 10 digits only!");
         }
         for (char c : userId.toCharArray()) {
             if (!Character.isDigit(c)) {
@@ -114,6 +114,9 @@ public class LotteryService {
         for(UserTicket userTicket :  this.userTicketRepository.findAll(example)){
             result.append(userTicket.getTicket().getTicketId()).append(" ");
             userTicketRepository.delete(userTicket);
+        }
+        if(result.isEmpty()){
+            throw new NotFoundException("Cannot find user id: " + userId + " with ticket id: " + ticketId);
         }
         return result.toString().trim();
     }

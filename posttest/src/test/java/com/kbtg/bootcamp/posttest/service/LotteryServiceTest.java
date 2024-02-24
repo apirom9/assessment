@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Example;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -102,7 +103,7 @@ public class LotteryServiceTest {
         String ticketId = "123456";
         Map<String, String> data = Map.of("", "User id must not be empty!",
                                         " ", "User id must not be empty!",
-                                        "12345678901", "User id is too long!",
+                                        "12345678901", "User id must be 10 digits only!",
                                         "123456789A", "User id must be numeric only");
 
         for(String userId : data.keySet()) {
@@ -159,11 +160,24 @@ public class LotteryServiceTest {
     void testDeleteNonExistingLottery() {
         String ticketId = "123456";
         String userId = "1234567890";
-        Lottery lottery = new Lottery(ticketId, 81, 1);
 
         when(lotteryRepository.findById(ticketId)).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> lotteryService.deleteBuyLottery(userId, ticketId));
         assertEquals("Cannot find ticket id: " + ticketId, exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("Test delete non-existing user id and lottery")
+    void testDeleteNonExistingUserIdAndLottery() {
+        String ticketId = "123456";
+        String userId = "1234567890";
+        Lottery lottery = new Lottery(ticketId, 81, 1);
+
+        when(lotteryRepository.findById(ticketId)).thenReturn(Optional.of(lottery));
+        when(userTicketRepository.findAll(any(Example.class))).thenReturn(Collections.emptyList());
+
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> lotteryService.deleteBuyLottery(userId, ticketId));
+        assertEquals("Cannot find user id: " + userId + " with ticket id: " + ticketId, exception.getMessage());
     }
 }
