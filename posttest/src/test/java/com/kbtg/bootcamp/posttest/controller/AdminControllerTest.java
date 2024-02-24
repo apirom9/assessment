@@ -1,4 +1,4 @@
-package com.kbtg.bootcamp.posttest;
+package com.kbtg.bootcamp.posttest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kbtg.bootcamp.posttest.lotteries.controller.AdminController;

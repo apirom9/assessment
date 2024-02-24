@@ -1,4 +1,4 @@
-package com.kbtg.bootcamp.posttest;
+package com.kbtg.bootcamp.posttest.controller;
 
 import com.kbtg.bootcamp.posttest.lotteries.controller.UserController;
 import com.kbtg.bootcamp.posttest.lotteries.repository.Lottery;

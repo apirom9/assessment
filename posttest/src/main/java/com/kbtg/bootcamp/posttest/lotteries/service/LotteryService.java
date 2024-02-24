@@ -57,17 +57,18 @@ public class LotteryService {
 
     public String buyLottery(String userId, String ticketId) {
 
+        validateUserId(userId);
+
         Optional<Lottery> ticket = this.lotteryRepository.findById(ticketId);
         if(ticket.isEmpty()){
             throw new NotFoundException("Cannot find ticket id: " + ticketId);
         }
-        validateUserId(userId);
 
         UserTicket userTicket = new UserTicket();
         userTicket.setUserId(userId);
         userTicket.setTicket(ticket.get());
         try{
-            this.userTicketRepository.save(userTicket);
+            userTicket = this.userTicketRepository.save(userTicket);
         } catch (Exception e){
             throw new InvalidRequestException("Ticket with id '" + ticketId + "' is already sold!");
         }
